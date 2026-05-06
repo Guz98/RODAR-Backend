@@ -28,14 +28,11 @@ app.use("/api/auth", authRouter); // POST /api/auth/signup, /api/auth/login — 
 app.use("/api", authMiddleware, privateRouter); // todos los endpoints privados — requieren token válido
 
 // ── Inicio del servidor ───────────────────────────────────────────────────────
-const PORT = process.env.PORT || 3000; // uso el puerto del .env o 3000 por defecto
 
 const start = async () => {
   try {
     await connectMongoDB(); // conecta a MongoDB Atlas antes de abrir el servidor
-    app.listen(PORT, () => {
-      console.log(`Servidor corriendo en http://localhost:${PORT}`);
-    });
+    console.log("Conexion a mongo establecida correctamente");
   } catch (error) {
     // Si la conexión a MongoDB falla, detiene la app — no tiene sentido correr sin base de datos
     console.error("Error al iniciar la aplicación:", error);
@@ -43,4 +40,4 @@ const start = async () => {
   }
 };
 
-start();
+module.exports = app;
