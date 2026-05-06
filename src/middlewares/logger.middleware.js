@@ -12,7 +12,7 @@ const loggerMiddleware = (req, res, next) => {
   // En producción (Vercel) el sistema de archivos no es escribible
   if (process.env.NODE_ENV !== "production") {
     const logPath = path.join(__dirname, "../utils/logs/requests.log");
-    fs.appendFile(logPath + "\n", log, (err) => {
+    fs.appendFile(logPath, log + "\n", (err) => {
       if (err) console.error("Error escribiendo log:", err);
     });
   }
