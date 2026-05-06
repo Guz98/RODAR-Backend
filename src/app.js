@@ -29,7 +29,7 @@ app.use("/api", authMiddleware, privateRouter); // todos los endpoints privados 
 
 // ── Inicio del servidor ───────────────────────────────────────────────────────
 
-const start = async () => {
+(async () => {
   try {
     await connectMongoDB(); // conecta a MongoDB Atlas antes de abrir el servidor
     console.log("Conexion a mongo establecida correctamente");
@@ -38,6 +38,6 @@ const start = async () => {
     console.error("Error al iniciar la aplicación:", error);
     process.exit(1);
   }
-};
+})();
 
 module.exports = app;
