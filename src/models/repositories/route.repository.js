@@ -5,7 +5,7 @@ const { Route } = require("../index");
 // para no sobrecargar la respuesta cuando el usuario solo quiere ver sus rutas
 const getRoutes = async (userId) => {
   return await Route.find({ userId }).select(
-    "title filter difficulty distanceKm estimatedTime isFavorite",
+    "title filter difficulty distanceKm estimatedTime isFavorite createdAt",
   );
 };
 
