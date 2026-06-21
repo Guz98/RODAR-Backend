@@ -85,6 +85,8 @@ const {
   updateWorkshopSchema,
 } = require("./validations/workshop.validation");
 
+const { getMeController } = require("../controllers/usuario.controller");
+
 // ── Rutas ciclistas ───────────────────────────────────────────────────────────
 // /calculate va antes que /:id para que Express no confunda "calculate" con un id
 router.post(
@@ -209,5 +211,7 @@ router.delete(
   "/workshops/:workshopId/reviews/:reviewId",
   deleteReviewController, // elimina mi reseña
 );
+
+router.get("/usuario/me", getMeController);
 
 module.exports = router;
