@@ -11,7 +11,7 @@ const calculateRouteSchema = Joi.object({
 // Schema para guardar una ruta ya calculada
 // origin y destination como arrays — el repository los convierte a GeoJSON antes de guardar
 const createRouteSchema = Joi.object({
-  title: Joi.string().min(3).max(60).required(),
+  title: Joi.string().min(3).max(120).required(),
   description: Joi.string().max(200),
   filter: Joi.string().valid("safe", "short", "flat").required(),
   origin: Joi.array().items(Joi.number()).length(2).required(),
