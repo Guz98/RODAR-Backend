@@ -3,28 +3,26 @@ const https = require("https");
 // ===============================
 // 🎯 CONFIGURACIÓN DE FILTROS
 // ===============================
-// Cada filtro usa un perfil y preferencia distintos de ORS:
-// - safe:  cycling-regular + recommended → prioriza ciclovías y calles tranquilas
-// - flat:  cycling-road + recommended   → prioriza rutas con menos pendiente
-// - short: cycling-regular + shortest   → mínima distancia sin importar tipo de calle
+// Los tres filtros usan cycling-regular (perfil urbano, soportado en Montevideo).
+// La diferenciación real entre safe y flat se hace con preference y avoid_features:
+// - short:   shortest   → mínima distancia
+// - safe:    recommended + evita autopistas → ORS prioriza ciclovías y calles tranquilas
+// - flat:    recommended sin restricciones  → ORS elige el recorrido más balanceado,
+//            la diferencia con safe se refleja en elevationGain y difficulty al procesar
 const CONFIG_FILTROS = {
   short: {
-    profile: "cycling-regular",
     preference: "shortest",
   },
   safe: {
-    profile: "cycling-regular",
     preference: "recommended",
     options: {
-      avoid_features: ["highways", "tollways", "fords"],
+      avoid_features: ["highways", "tollways"], // evita autopistas y peajes
     },
   },
   flat: {
-    profile: "cycling-road", // perfil que penaliza pendientes fuertes
     preference: "recommended",
-    options: {
-      avoid_features: ["highways", "tollways"],
-    },
+    // Sin avoid_features — ORS tiene más libertad para encontrar el recorrido
+    // con menor desnivel, que puede pasar por calles que safe evitaría
   },
 };
 
@@ -118,7 +116,7 @@ const calcularRuta = (origin, destination, filter) => {
 
     const options = {
       hostname: "api.openrouteservice.org",
-      path: `/v2/directions/${config.profile}/geojson`,
+      path: "/v2/directions/cycling-regular/geojson", // mismo perfil para los 3
       method: "POST",
       headers: {
         Authorization: process.env.ORS_API_KEY,
