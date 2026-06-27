@@ -85,7 +85,7 @@ const getWorkshopsNearby = async (lng, lat, km) => {
         $maxDistance: km * 1000, // convierte km a metros
       },
     },
-  }).select("name phone address schedule location rating");
+  }).select("name phone address schedule location rating image");
 
   await cacheService.set(cacheKey, workshops);
   return workshops;
