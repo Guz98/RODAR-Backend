@@ -31,6 +31,7 @@ const {
   putWorkshopController,
   deleteWorkshopController,
   getWorkshopsNearbyController,
+  getMyWorkshopController,
 } = require("../controllers/workshops.controller");
 
 const {
@@ -126,28 +127,32 @@ router.delete("/incidents/:id", deleteIncidentController); // elimina un inciden
 // ── Talleres ──────────────────────────────────────────────────────────────────
 // GET: cualquier usuario autenticado puede ver los talleres
 // POST, PUT, DELETE: solo usuarios con rol "workshop_owner" pueden modificarlos
-// /nearby va antes que /:id para que Express no confunda "nearby" con un id
+// /nearby y /my van antes que /:id para que Express no los confunda con un id
 router.get("/workshops/nearby", getWorkshopsNearbyController); // talleres cercanos a una ubicación
+router.get(
+  "/workshops/my",
+  roleMiddleware("workshop_owner"),
+  getMyWorkshopController,
+); // el dueño ve su propio taller
 router.get("/workshops", getWorkshopsController); // todos los talleres activos
 router.get("/workshops/:id", getWorkshopController); // un taller específico
 router.post(
   "/workshops",
-  roleMiddleware("workshop_owner"), // verifica que el usuario sea dueño de taller
+  roleMiddleware("workshop_owner"),
   payloadMiddleware(createWorkshopSchema),
-  postWorkshopController, // crea un nuevo taller
+  postWorkshopController,
 );
 router.put(
   "/workshops/:id",
-  roleMiddleware("workshop_owner"), // solo el dueño puede editar su taller
+  roleMiddleware("workshop_owner"),
   payloadMiddleware(updateWorkshopSchema),
-  putWorkshopController, // edita los datos del taller
+  putWorkshopController,
 );
 router.delete(
   "/workshops/:id",
-  roleMiddleware("workshop_owner"), // solo el dueño puede eliminar su taller
-  deleteWorkshopController, // da de baja el taller
+  roleMiddleware("workshop_owner"),
+  deleteWorkshopController,
 );
-
 // ── Estacionamientos ──────────────────────────────────────────────────────────
 // Cualquier usuario autenticado puede ver, crear y gestionar estacionamientos
 // /nearby va antes que /:id para que Express no confunda "nearby" con un id
