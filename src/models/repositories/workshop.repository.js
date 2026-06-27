@@ -10,7 +10,7 @@ const getWorkshops = async () => {
   if (cached) return cached;
 
   const workshops = await Workshop.find({ active: true }).select(
-    "name phone address schedule location rating",
+    "name phone address schedule location rating image",
   );
 
   await cacheService.set(cacheKey, workshops);

@@ -11,4 +11,18 @@ const getMeController = async (req, res) => {
   }
 };
 
-module.exports = { getMeController };
+const putMeController = async (req, res) => {
+  try {
+    const { avatar } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { avatar },
+      { new: true },
+    ).select("-password");
+    res.status(200).json(user);
+  } catch {
+    res.status(500).json({ message: "Ha ocurrido un error" });
+  }
+};
+
+module.exports = { getMeController, putMeController };

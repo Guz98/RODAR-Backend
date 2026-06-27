@@ -25,6 +25,7 @@ const workshopSchema = new mongoose.Schema(
       average: { type: Number, default: 0 }, // promedio de estrellas
       count: { type: Number, default: 0 }, // cantidad de reseñas
     },
+    avatar: { type: String, default: null }, // URL de la foto de perfil (Cloudinary)
   },
   { timestamps: true },
 );

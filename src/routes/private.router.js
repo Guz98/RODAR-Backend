@@ -86,7 +86,10 @@ const {
   updateWorkshopSchema,
 } = require("./validations/workshop.validation");
 
-const { getMeController } = require("../controllers/usuario.controller");
+const {
+  getMeController,
+  putMeController,
+} = require("../controllers/usuario.controller");
 
 // ── Rutas ciclistas ───────────────────────────────────────────────────────────
 // /calculate va antes que /:id para que Express no confunda "calculate" con un id
@@ -218,5 +221,6 @@ router.delete(
 );
 
 router.get("/usuario/me", getMeController);
+router.put("/usuario/me", putMeController);
 
 module.exports = router;
