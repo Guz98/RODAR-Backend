@@ -14,15 +14,10 @@ const CONFIG_FILTROS = {
     preference: "shortest",
   },
   safe: {
-    preference: "recommended",
-    options: {
-      avoid_features: ["highways", "tollways"], // evita autopistas y peajes
-    },
+    preference: "recommended", // ORS con cycling-regular ya prioriza ciclovías por defecto
   },
   flat: {
-    preference: "recommended",
-    // Sin avoid_features — ORS tiene más libertad para encontrar el recorrido
-    // con menor desnivel, que puede pasar por calles que safe evitaría
+    preference: "recommended", // mismo preference, la diferencia la marca calcularDificultad
   },
 };
 
