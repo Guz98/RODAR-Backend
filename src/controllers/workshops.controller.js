@@ -16,6 +16,20 @@ const getWorkshopsController = async (req, res) => {
   }
 };
 
+const getMyWorkshopController = async (req, res) => {
+  try {
+    const workshop = await Workshop.findOne({
+      ownerId: req.user.id,
+      active: true,
+    });
+    if (!workshop)
+      return res.status(404).json({ message: "No tenés un taller registrado" });
+    res.status(200).json(workshop);
+  } catch {
+    res.status(500).json({ message: "Ha ocurrido un error" });
+  }
+};
+
 const getWorkshopController = async (req, res) => {
   try {
     const workshop = await findWorkshop(req.params.id);
@@ -83,4 +97,5 @@ module.exports = {
   putWorkshopController,
   deleteWorkshopController,
   getWorkshopsNearbyController,
+  getMyWorkshopController,
 };
