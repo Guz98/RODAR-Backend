@@ -13,6 +13,12 @@ const findUserById = async (id) => {
   return await User.findById(id).select("-password");
 };
 
+const updateUserAvatar = async (userId, avatar) => {
+  return await User.findByIdAndUpdate(userId, { avatar }, { new: true }).select(
+    "-password",
+  );
+};
+
 // Compara la contraseña ingresada con el hash guardado en MongoDB
 // bcrypt.compare no desencripta — genera el hash de la contraseña ingresada
 // y lo compara con el almacenado. Devuelve true si coinciden, false si no
@@ -40,4 +46,5 @@ module.exports = {
   findUserById,
   isValidPassword,
   saveUser,
+  updateUserAvatar,
 };
