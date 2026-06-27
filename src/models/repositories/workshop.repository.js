@@ -91,6 +91,10 @@ const getWorkshopsNearby = async (lng, lat, km) => {
   return workshops;
 };
 
+const findMyWorkshop = async (ownerId) => {
+  return await Workshop.findOne({ ownerId, active: true });
+};
+
 module.exports = {
   getWorkshops,
   findWorkshop,
@@ -98,4 +102,5 @@ module.exports = {
   updateWorkshop,
   deleteWorkshop,
   getWorkshopsNearby,
+  findMyWorkshop,
 };

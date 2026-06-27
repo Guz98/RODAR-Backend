@@ -5,6 +5,7 @@ const {
   updateWorkshop,
   deleteWorkshop,
   getWorkshopsNearby,
+  findMyWorkshop,
 } = require("../models/repositories/workshop.repository");
 
 const getWorkshopsController = async (req, res) => {
@@ -18,10 +19,7 @@ const getWorkshopsController = async (req, res) => {
 
 const getMyWorkshopController = async (req, res) => {
   try {
-    const workshop = await Workshop.findOne({
-      ownerId: req.user.id,
-      active: true,
-    });
+    const workshop = await findMyWorkshop(req.user.id);
     if (!workshop)
       return res.status(404).json({ message: "No tenés un taller registrado" });
     res.status(200).json(workshop);
